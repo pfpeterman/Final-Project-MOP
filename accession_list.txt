@@ -1,1 +1,7 @@
 This file is for us to list our SRA accession numbers and files
+
+ACQ02_gp11
+https://www.ncbi.nlm.nih.gov/gene/24703284
+
+BAQ71_mgp01
+https://www.ncbi.nlm.nih.gov/gene/27982434
