@@ -8,3 +8,14 @@ https://www.ncbi.nlm.nih.gov/gene/24703284
 CYTB cytochrome b
 BAQ71_mgp01
 https://www.ncbi.nlm.nih.gov/gene/27982434
+
+Data To be used from NCBI
+Lake Michigan:
+
+Rouge River:
+
+Kalamazoo River: 
+
+Clinton River:
+
+
