@@ -4,5 +4,6 @@ For sure using
 3. QGIS
 4. Trimmomatic 
 5. Deblur
+6. MAFFT
 
 Potenial Use
