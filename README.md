@@ -15,3 +15,11 @@ process:
 7. Construct a phylogeneic tree using FASTtree.
 8. Construct a map with QGIS.
 9. Compare detection patterns across the Great Lakes Region. 
+
+
+## Extracting hit labels from blast results
+
+cut -f1 filtered_hits.txt | sort | uniq > matching_ids.txt
+seqtk subseq concatenated.fasta carp_list.txt > carp_hits_seqs.fasta
+
+## Conver blast results into an abundance table
