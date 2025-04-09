@@ -20,7 +20,7 @@ process:
 vi srr_files.txt
 ```
 
-paste accession list:
+- paste accession list:
 
 ```
 SRR32172062
@@ -71,7 +71,7 @@ SRR32543564
 vi download.sh
 ```
 
-paste the script into the file:
+- paste the script into the file:
 
 ```
 #!/bin/bash
@@ -97,7 +97,7 @@ bash download.sh
 vi blast.sh
 ```
 
-paste the script:
+- paste the script:
 
 ```
 #!/bin/bash
@@ -135,4 +135,4 @@ cut -f1 filtered_hits.txt | sort | uniq > matching_ids.txt
 seqtk subseq concatenated.fasta carp_list.txt > carp_hits_seqs.fasta
 ```
 
-- Conver blast results into an abundance table
+- Convert blast results into an abundance table
