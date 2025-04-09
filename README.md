@@ -14,7 +14,7 @@ process:
 
 ## Step 1: Create & Download Query
 
-# 1. Make a file for the accession numbers
+- Make a file for the accession numbers
 
 ```bash
 vi srr_files.txt
@@ -65,7 +65,7 @@ SRR32543554
 SRR32543564
 ```
 
-# 2. Create script to download files from NCBI
+- Create script to download files from NCBI
 
 ```
 vi download.sh
@@ -83,7 +83,7 @@ while read -r SRR; do
 done < srr_files.txt
 ```
 
-# 3. Execute the script
+- Execute the script
 
 ```
 bash download.sh
@@ -91,7 +91,7 @@ bash download.sh
 
 ## Step 2: BLAST query to reference
 
-# 1. create BLAST script 
+- Create BLAST script 
 
 ```
 vi blast.sh
@@ -120,13 +120,19 @@ makeblastdb -in concatenated.fasta -dbtype nucl -out database_all
 blastn -query reference.fasta -db database_all -out results_carp.txt -outfmt 6
 ```
 
+- execute script
+
+```
+bash blast.sh
+```
+
 ## Step 3: Collect Data
 
-# 1. Extract hits from results
+- Extract hits from results
 
 ```
 cut -f1 filtered_hits.txt | sort | uniq > matching_ids.txt
 seqtk subseq concatenated.fasta carp_list.txt > carp_hits_seqs.fasta
 ```
 
-# 2. Conver blast results into an abundance table
+- Conver blast results into an abundance table
