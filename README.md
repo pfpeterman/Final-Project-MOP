@@ -12,6 +12,8 @@ process:
 4. Construct a map with QGIS.
 5. Compare detection patterns across the Great Lakes Region. 
 
+# Fork & clone repository before beginning
+
 ## Step 1: Create & Download Query
 
 - Make a file for the accession numbers
@@ -136,3 +138,21 @@ seqtk subseq concatenated.fasta carp_list.txt > carp_hits_seqs.fasta
 ```
 
 - Convert blast results into an abundance table
+
+## Step 4: View Data Table
+
+- Add table to repository
+
+```
+git add filename.ext
+```
+
+```
+git commit -m "Results Table"
+```
+
+```
+git push origin main
+```
+
+- View table in ?
