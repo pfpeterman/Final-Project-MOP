@@ -152,6 +152,46 @@ ATAAACCCACCTGACCCCACGAAAGCTGAGAAA
 
 ## Step 3: BLAST query to reference
 
+### Concatenating forward and reverse files into a single fasta file
+```
+#!/bin/bash
+
+mkdir -p concat
+
+for fwd in *_1.fasta; do
+    acc="${fwd%%_*}"
+    rev="${acc}_2.fasta"
+
+    if [[ -f "$rev" ]]; then
+        cat "$fwd" "$rev" > "concat/${acc}.fasta"
+        echo "Concatenated $acc"
+    else
+        echo "Missing reverse file for $acc"
+    fi
+done
+```
+### Running blast using each accession as a subject
+
+```
+#!/bin/bash
+
+mkdir -p blast_results
+
+# Loop over each subject file in the concat directory
+for subject in concat/*.fasta; do
+    # Extract accession from filename
+    acc=$(basename "$subject" .fasta)
+
+    # Make BLAST database (you could skip this if done once already)
+    makeblastdb -in "$subject" -dbtype nucl -out "blastdb/${acc}"
+
+    # Run BLAST
+    blastn -query reference.fasta -db "blastdb/${acc}" \
+           -out "blast_results/${acc}_vs_carp.txt" \
+           -outfmt 6 -evalue 1e-5 -max_target_seqs 5
+    echo "Finished BLAST for $acc"
+done
+```
 - Create BLAST script 
 
 ```
