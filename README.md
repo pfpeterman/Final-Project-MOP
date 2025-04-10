@@ -128,7 +128,7 @@ blastn -query reference.fasta -db database_all -out results_carp.txt -outfmt 6
 bash blast.sh
 ```
 
-## Step 3: Collect Data
+## Step 3: Confirm Identity of Hits
 
 - Extract hits from results
 
@@ -137,22 +137,20 @@ cut -f1 filtered_hits.txt | sort | uniq > matching_ids.txt
 seqtk subseq concatenated.fasta carp_list.txt > carp_hits_seqs.fasta
 ```
 
-- Convert blast results into an abundance table
+- Open hits file
+
+```
+cat carp_hits_seqs.fasta
+```
+- select the hit with the lowest matching score
+- Navigate to https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome
+- Paste sequence and click BLAST
+- Confirm the top hit is Cyprinus carpio
 
 ## Step 4: View Data Table
 
-- Add table to repository
+- Convert blast results into an abundance table
 
-```
-git add filename.ext
-```
-
-```
-git commit -m "Results Table"
 ```
 
 ```
-git push origin main
-```
-
-- View table in ?
