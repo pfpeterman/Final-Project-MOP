@@ -133,7 +133,24 @@ done < srr_files.txt
 bash download.sh
 ```
 
-## Step 2: BLAST query to reference
+## Step 2: Create Reference FASTA
+
+- make reference file
+
+```
+vi reference.fasta
+```
+
+- paste the reference fasta (12S Gene)
+
+```
+>LC091587.1 Cyprinus carpio mitochondrial gene for 12S rRNA, partial sequence, specimen_voucher: UW:154625
+CACCGCGGTTAGACGAGAGGCCCTAGTTGATATTACAACGGCGTAAAGGGTGGTTAAGGATAAACAAAAA
+TAAAGTCAAATGGCCCCTTGGCCGTCATACGCTTCTAGGAGTCCGAAGCCCTAATACGAAAGTAACTTTA
+ATAAACCCACCTGACCCCACGAAAGCTGAGAAA
+```
+
+## Step 3: BLAST query to reference
 
 - Create BLAST script 
 
@@ -170,7 +187,7 @@ blastn -query reference.fasta -db database_all -out results_carp.txt -outfmt 6
 bash blast.sh
 ```
 
-## Step 3: Confirm Identity of Hits
+## Step 4: Confirm Identity of Hits
 
 - Extract hits from results
 
@@ -189,7 +206,7 @@ cat carp_hits_seqs.fasta
 - Paste sequence and click BLAST
 - Confirm the top hit is Cyprinus carpio
 
-## Step 4: Create Chart
+## Step 5: Create Figure
 
 - Push results to repository
 - Download .txt file 
@@ -199,3 +216,5 @@ cat carp_hits_seqs.fasta
 ```
 
 ```
+
+## Step 6: Create Map
