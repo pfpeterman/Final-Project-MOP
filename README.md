@@ -177,6 +177,8 @@ done
 
 mkdir -p blast_results
 
+module load BLAST
+
 # Loop over each subject file in the concat directory
 for subject in concat/*.fasta; do
     # Extract accession from filename
