@@ -1,4 +1,3 @@
-script
 ```
 #!/bin/bash
 module load BLAST
