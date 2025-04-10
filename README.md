@@ -189,9 +189,12 @@ cat carp_hits_seqs.fasta
 - Paste sequence and click BLAST
 - Confirm the top hit is Cyprinus carpio
 
-## Step 4: View Data Table
+## Step 4: Create Chart
 
-- Convert blast results into an abundance table
+- Push results to repository
+- Download .txt file 
+- Make a new project in R Studio & set working directory to location of .txt file
+- Paste and excecute the R script:
 
 ```
 
