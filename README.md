@@ -234,6 +234,11 @@ blastn -query reference.fasta -db database_all -out results_carp.txt -outfmt 6
 bash blast.sh
 ```
 
+combine results
+```
+cat *txt > results_carp.txt
+```
+
 ## Step 4: Confirm Identity of Hits
 
 - Extract hits from results
