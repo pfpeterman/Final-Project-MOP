@@ -188,8 +188,13 @@ for subject in concat/*.fasta; do
     # Run BLAST
     blastn -query reference.fasta -db "blastdb/${acc}" \
            -out "blast_results/${acc}_vs_carp.txt" \
-           -outfmt 6 -evalue 1e-5 -max_target_seqs 5
-    echo "Finished BLAST for $acc"
+           -outfmt 6
+
+   awk -v acc="$acc" 'BEGIN{OFS="\t"} {print acc, $0}' \
+        blast_results/${acc}_vs_carp.tmp >> blast_results/all_blast_results.tsv
+
+   echo "Finished BLAST for $acc"
+
 done
 ```
 - Create BLAST script 
