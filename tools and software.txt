@@ -1,4 +1,5 @@
 1. FastQC
 2. BLAST
 3. SeqTK
-4. QGIS
+4. R Studio
+5. QGIS
