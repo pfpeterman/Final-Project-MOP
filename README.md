@@ -153,6 +153,14 @@ ATAAACCCACCTGACCCCACGAAAGCTGAGAAA
 ## Step 3: BLAST query to reference
 
 ### Concatenating forward and reverse files into a single fasta file
+- Create BLAST script 
+
+```
+vi concat.sh
+```
+
+- paste the script:
+
 ```
 #!/bin/bash
 
@@ -171,6 +179,13 @@ for fwd in *_1.fasta; do
 done
 ```
 ### Running blast using each accession as a subject
+- Create BLAST script 
+
+```
+vi blast.sh
+```
+
+- paste the script:
 
 ```
 #!/bin/bash
@@ -192,41 +207,12 @@ for subject in concat/*.fasta; do
            -out "blast_results/${acc}_vs_carp.txt" \
            -outfmt 6
 
-   awk -v acc="$acc" 'BEGIN{OFS="\t"} {print acc, $0}' \
-        blast_results/${acc}_vs_carp.tmp >> blast_results/all_blast_results.tsv
-
-   echo "Finished BLAST for $acc"
+  echo "Finished BLAST for $acc"
 
 done
 ```
-- Create BLAST script 
-
-```
-vi blast.sh
-```
-
-- paste the script:
-
-```
-#!/bin/bash
-
-module load BLAST
-
-#converting fastq to fasta
-for FILE in fastq_files/*; do
-
-        BASE=$(basename "$FILE" .fastq.gz)
-        seqtk seq -A "$FILE" > "${BASE}.fasta"
-done
-
-cat SRR*.fasta > concatenated.fasta
-
-#making subject database (run only once)
-makeblastdb -in concatenated.fasta -dbtype nucl -out database_all
-
-#run BLAST
-blastn -query reference.fasta -db database_all -out results_carp.txt -outfmt 6
-```
+- NOTE: Default blast parameters above produce 500 hits. You can increase the number of hits by adding `-max-target-seq 1000` right after number 6 in the blastn command.
+- NOTE: Identity threshold for fish species appears to be 99.45, lower identity may be questionable. Can you please run the blast script by adding this flag and see if you get many hits? -perc_identity 99.45
 
 - execute script
 
@@ -236,7 +222,7 @@ bash blast.sh
 
 combine results
 ```
-cat *txt > results_carp.txt
+cat blast_results/*.txt > results_carp.txt
 ```
 
 ## Step 4: Confirm Identity of Hits
@@ -257,6 +243,39 @@ cat carp_hits_seqs.fasta
 - Navigate to https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome
 - Paste sequence and click BLAST
 - Confirm the top hit is Cyprinus carpio
+
+## Normalize hits
+1. Cound number of reads per sample
+```
+vi read_count.sh
+```
+- Type I and paste:
+```
+#!/bin/bash
+mkdir -p read_counts
+
+for file in concat/*.fasta; do
+    acc=$(basename "$file" .fasta)
+    count=$(grep -c "^>" "$file")
+    echo -e "${acc}\t${count}"
+done > read_counts/read_counts.tsv
+```
+- Run read_count.sh script:
+```
+bash read_count.sh
+```
+Lets run the following in the terminal
+
+```
+cut -f1 blast_results/all_blast_results.tsv | sort | uniq -c | awk '{print $2"\t"$1}' > blast_hit_counts.tsv
+
+awk 'FNR==NR{a[$1]=$2; next} ($1 in a){printf "%s\t%s\t%s\t%.2f\n", $1, a[$1], $2, (a[$1]/$2)*1000000}' \
+blast_hit_counts.tsv read_counts/read_counts.tsv > carp_abundance_HPMR.tsv
+
+sed -i '1iaccession\thit_count\tread_count\tHPMR' carp_abundance_HPMR.tsv
+
+```
+
 
 ## Step 5: Create Figure
 
