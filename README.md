@@ -275,9 +275,31 @@ blast_hit_counts.tsv read_counts/read_counts.tsv > carp_abundance_HPMR.tsv
 sed -i '1iaccession\thit_count\tread_count\tHPMR' carp_abundance_HPMR.tsv
 
 ```
+## Step 5: Create Figure USING STANDARDIZED HITS
+```
+# Load libraries
+library(readr)
+library(ggplot2)
 
+# Load the HPMR file
+hpmr <- read_tsv("carp_abundance_HPMR.tsv")
 
-## Step 5: Create Figure
+# Optional: sort by HPMR descending
+hpmr <- hpmr[order(hpmr$HPMR, decreasing = TRUE), ]
+
+# Plot
+ggplot(hpmr, aes(x = reorder(accession, HPMR), y = HPMR)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Carp 12S Abundance Across Michigan Rivers",
+    x = "Sample",
+    y = "Hits per Million Reads (HPMR)"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+## Step 5: Create Figure USING BLAST RESULTS
 
 - Push results to repository
 - Download .txt file 
