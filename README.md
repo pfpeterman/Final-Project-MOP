@@ -267,7 +267,7 @@ bash read_count.sh
 Lets run the following in the terminal
 
 ```
-cut -f1 blast_results/all_blast_results.tsv | sort | uniq -c | awk '{print $2"\t"$1}' > blast_hit_counts.tsv
+cut -f2 all_blast_results.tsv | cut -d'.' -f1 | sort | uniq -c | awk '{print $2"\t"$1}' > blast_hit_counts.tsv
 
 awk 'FNR==NR{a[$1]=$2; next} ($1 in a){printf "%s\t%s\t%s\t%.2f\n", $1, a[$1], $2, (a[$1]/$2)*1000000}' \
 blast_hit_counts.tsv read_counts/read_counts.tsv > carp_abundance_HPMR.tsv
@@ -278,6 +278,8 @@ sed -i '1iaccession\thit_count\tread_count\tHPMR' carp_abundance_HPMR.tsv
 ## Step 5: Create Figure USING STANDARDIZED HITS
 ```
 # Load libraries
+install.packages("readr")
+
 library(readr)
 library(ggplot2)
 
