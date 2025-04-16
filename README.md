@@ -222,7 +222,7 @@ bash blast.sh
 
 combine results
 ```
-cat blast_results/*.txt > results_carp.txt
+cat blast_results/*.txt > all_blast_results.tsv
 ```
 
 ## Step 4: Confirm Identity of Hits
